@@ -1,13 +1,32 @@
 package com.poliplanner.domain.model;
 
-import com.poliplanner.domain.enums.TipoExamen;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+@Data
+@Entity
 public class Examen {
-    Date fecha;
-    Aula aula;
-    Date fechaRevision;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    TipoExamen tipo;
+    private Date fecha;
+    private Date fechaRevision;
+
+    @ManyToOne
+    private Aula aula;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
+
+    public static enum Tipo {
+        PRIMER_PARCIAL, SEGUNDO_PARCIAL, PRIMER_FINAL, SEGUNDO_FINAL;
+    }
 }
