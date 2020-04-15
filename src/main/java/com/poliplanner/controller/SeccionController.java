@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path="/secciones", produces="application/json")
@@ -25,6 +26,6 @@ public class SeccionController {
 
         Collection<String> carreras = List.of(carrera,"LCIK");
 
-        return repo.findByMateria_Carrera_CodigoInAndHorario_Uuid(carreras,Long.parseLong(horario));
+        return repo.findByMateria_Carrera_CodigoInAndHorario_Uuid(carreras,UUID.fromString(horario));
     }
 }

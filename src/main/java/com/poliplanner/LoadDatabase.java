@@ -1,6 +1,5 @@
 package com.poliplanner;
 
-import com.poliplanner.config.AppProperties;
 import com.poliplanner.data.*;
 import com.poliplanner.domain.enums.AuthProvider;
 import com.poliplanner.domain.enums.Dia;
@@ -36,8 +35,8 @@ public class LoadDatabase {
     private RoleRepository roleRepository;
     @Autowired
     private PrivilegeRepository privilegeRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    //@Autowired
+    //private PasswordEncoder passwordEncoder;
 
     @Bean
     public CommandLineRunner dataLoader() {
@@ -46,7 +45,7 @@ public class LoadDatabase {
             public void run(String... args) throws Exception {
                 createDummyData();
 
-                setupPrivileges();
+                //setupPrivileges();
 
             }
         };
@@ -72,7 +71,7 @@ public class LoadDatabase {
         Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
         Usuario user = new Usuario();
         user.setNombre("Test");
-        user.setPassword(passwordEncoder.encode("test"));
+        //user.setPassword(passwordEncoder.encode("test"));
         user.setEmail("test@test.com");
         user.setAuthProvider(AuthProvider.local);
         user.setRoles(Arrays.asList(adminRole));
