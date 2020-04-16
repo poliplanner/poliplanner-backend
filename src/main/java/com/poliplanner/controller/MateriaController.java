@@ -21,8 +21,7 @@ public class MateriaController {
     }
 
     @GetMapping
-    public Iterable<Materia> listMaterias(@RequestParam("carrera") String carrera){
-        Collection<String> carreras = List.of(carrera,"LCIK");
+    public Iterable<Materia> listMaterias(@RequestParam("carrera") List<String> carreras){
         return repo.findByCarreraCodigoIn(carreras);
     }
 }
