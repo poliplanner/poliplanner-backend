@@ -1,9 +1,9 @@
 auth-server:
   url: http://localhost:8083
   realm-name: poliplanner
-
-####### resource server configuration properties
 spring:
+  profiles:
+    active:
   security:
     oauth2:
       resourceserver:

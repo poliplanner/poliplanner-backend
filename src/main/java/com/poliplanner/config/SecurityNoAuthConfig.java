@@ -2,13 +2,12 @@ package com.poliplanner.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-@Profile("use-auth")
+@Profile("!use-auth")
 @Configuration
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityNoAuthConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -16,10 +15,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                     .anyRequest()
-                        .authenticated()
-            .and()
-                .oauth2ResourceServer()
-                    .jwt();
+                        .permitAll();
     }
 
 }
+

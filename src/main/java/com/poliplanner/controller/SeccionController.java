@@ -20,8 +20,8 @@ public class SeccionController {
     }
 
     @GetMapping
-    public Iterable<Seccion> listSecciones(@RequestParam("horario") String horarioUuid,
-                                           @RequestParam("carrera") List<String> carreras){
+    public Iterable<Seccion> listSecciones(@RequestParam("carrera") List<String> carreras,
+                                           @RequestParam("horario") String horarioUuid){
         return repo.findByMateria_Carrera_CodigoInAndHorario_Uuid(carreras,UUID.fromString(horarioUuid));
     }
 }

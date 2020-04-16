@@ -9,5 +9,4 @@ import java.util.UUID;
 
 public interface SeccionRepository extends CrudRepository<Seccion, Long> {
     List<Seccion> findByMateria_Carrera_CodigoInAndHorario_Uuid(Collection<String> carreras, UUID horario);
-    List<Seccion> findAllByUuidIn(Collection<UUID> secciones);
 }
