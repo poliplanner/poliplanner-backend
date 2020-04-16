@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path = "/inscripciones", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/users/inscripciones", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin("*")
 public class InscripcionController {
     private InscripcionRepository inscripcionRepository;

@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping(path = "/materias", produces = "application/json")
+@RequestMapping(path = "/fpuna/materias", produces = "application/json")
 public class MateriaController {
     private MateriaRepository repo;
 

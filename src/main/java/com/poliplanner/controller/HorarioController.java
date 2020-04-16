@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/horarios", produces = "application/json")
+@RequestMapping(path = "/fpuna/horarios", produces = "application/json")
 @CrossOrigin("*")
 public class HorarioController {
     private HorarioRepository repo;

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(path="/secciones", produces="application/json")
+@RequestMapping(path="/fpuna/secciones", produces="application/json")
 @CrossOrigin(origins="*")
 public class SeccionController {
     private SeccionRepository repo;

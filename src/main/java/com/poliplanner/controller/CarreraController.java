@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(path="/carreras", produces="application/json")
+@RequestMapping(path="/fpuna/carreras", produces="application/json")
 @CrossOrigin(origins="*")
 public class CarreraController {
     private CarreraRepository repo;
