@@ -24,6 +24,10 @@ public class Seccion {
 
     private String codigo;
 
+    private String nombre;
+
+    private boolean soloConFirma = false;
+
     @ManyToOne
     private Horario horario;
 
@@ -37,4 +41,8 @@ public class Seccion {
     private List<Examen> examenes;
     @ManyToMany
     private List<Clase> clases;
+
+    public String getNombre(){
+        return nombre != null? nombre: materia.getNombre();
+    }
 }

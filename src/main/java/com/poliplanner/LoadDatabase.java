@@ -56,7 +56,7 @@ public class LoadDatabase {
         Aula a = aulaRepository.save(new Aula(null,UUID.randomUUID(),"A51"));
         Clase c1 = claseRepository.save(new Clase(null,UUID.randomUUID(), Clase.Tipo.CLASE, Dia.JUEVES,"08:00","10:00",a));
         Clase c2 = claseRepository.save(new Clase(null,UUID.randomUUID(), Clase.Tipo.CLASE, Dia.LUNES,"08:00","10:00",a));
-        Seccion s = seccionRepository.save(new Seccion(null, UUID.randomUUID(),"MQ",h,m,null,null, List.of(c1,c2)));
+        Seccion s = seccionRepository.save(new Seccion(null, UUID.randomUUID(),"MQ",null,false,h,m,null,null, List.of(c1,c2)));
         inscripcionRepository.save(new Inscripcion(null, UUID.randomUUID(), List.of(s), null));
     }
 
