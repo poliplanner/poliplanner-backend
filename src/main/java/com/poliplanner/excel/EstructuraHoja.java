@@ -1,5 +1,6 @@
 package com.poliplanner.excel;
 
+import com.poliplanner.domain.enums.Dia;
 import com.poliplanner.domain.model.Examen;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -8,6 +9,10 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
@@ -113,7 +118,7 @@ public class EstructuraHoja {
                 setSegundoParcialHoraColumn(i);
             else if (subHeader.equals("AULA") &&
                     headerRow.getCell(i - 2).getStringCellValue().equals("2do. Parcial"))
-                setSegundoParcialHoraColumn(i);
+                setSegundoParcialAulaColumn(i);
 
 
             else if (subHeader.equals("Día") &&
@@ -228,6 +233,38 @@ public class EstructuraHoja {
         }
         return new ExamenColumns(fechaColumn,horaColumn,aulaColumn,revisionFechaColumn,revisionHoraColumn);
     }
+
+    public ClaseColumns getColumnasClaseDia(Dia dia){
+        Integer horarioColumn = null, aulaColumn = null;
+        switch (dia){
+            case LUNES:
+                horarioColumn = getLunesColumn();
+                aulaColumn = getLunesAulaColumn();
+                break;
+            case MARTES:
+                horarioColumn = getMartesColumn();
+                aulaColumn = getMartesAulaColumn();
+                break;
+            case MIERCOLES:
+                horarioColumn = getMiercolesColumn();
+                aulaColumn = getMiercolesAulaColumn();
+                break;
+            case JUEVES:
+                horarioColumn = getJuevesColumn();
+                aulaColumn = getJuevesAulaColumn();
+                break;
+            case VIERNES:
+                horarioColumn = getViernesColumn();
+                aulaColumn = getViernesAulaColumn();
+                break;
+            case SABADO:
+                horarioColumn = getSabadoColumn();
+                aulaColumn = getSabadoAulaColumn();
+                break;
+        }
+        return new ClaseColumns(horarioColumn, aulaColumn);
+    }
+
     
     
 }

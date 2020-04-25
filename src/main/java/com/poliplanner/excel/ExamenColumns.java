@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ExamenColumns {
+class ExamenColumns {
     private Integer fechaColumn;
     private Integer horaColumn;
     private Integer aulaColumn;
