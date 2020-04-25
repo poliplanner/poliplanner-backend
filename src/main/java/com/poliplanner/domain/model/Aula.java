@@ -22,5 +22,6 @@ public class Aula {
     @Column(length = 16, unique = true)
     private UUID uuid = UUID.randomUUID();
 
+    @Column(unique = true)
     private String codigo;
 }

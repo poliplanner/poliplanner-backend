@@ -37,9 +37,9 @@ public class Seccion {
     @ElementCollection
     private List<String> profesores;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Examen> examenes;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Clase> clases;
 
     public String getNombre(){
