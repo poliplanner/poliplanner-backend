@@ -15,19 +15,9 @@ import java.util.*;
 @Configuration
 public class LoadDatabase {
     @Autowired
-    private HorarioRepository horarioRepository;
-    @Autowired
     private CarreraRepository carreraRepository;
     @Autowired
-    private SeccionRepository seccionRepository;
-    @Autowired
     private MateriaRepository materiaRepository;
-    @Autowired
-    private InscripcionRepository inscripcionRepository;
-    @Autowired
-    private ClaseRepository claseRepository;
-    @Autowired
-    private AulaRepository aulaRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -35,8 +25,6 @@ public class LoadDatabase {
     private RoleRepository roleRepository;
     @Autowired
     private PrivilegeRepository privilegeRepository;
-    //@Autowired
-    //private PasswordEncoder passwordEncoder;
 
     @Bean
     public CommandLineRunner dataLoader() {
@@ -44,20 +32,9 @@ public class LoadDatabase {
             @Override
             public void run(String... args) throws Exception {
                 loadMateriasDefault();
-                createDummyData();
 
             }
         };
-    }
-    private void createDummyData(){
-        Horario h = horarioRepository.save(new Horario(null, UUID.randomUUID(),new Date(), "horario 1",null));
-        Carrera c = carreraRepository.save(new Carrera(null,UUID.randomUUID(),"ca1","carrera1",10));
-        Materia m = materiaRepository.save(new Materia(null,UUID.randomUUID(),c,"materia 1",null,null,5));
-        Aula a = aulaRepository.save(new Aula(null,UUID.randomUUID(),"A51"));
-        Clase c1 = claseRepository.save(new Clase(null,UUID.randomUUID(), Clase.Tipo.CLASE, Dia.JUEVES,"08:00","10:00",a));
-        Clase c2 = claseRepository.save(new Clase(null,UUID.randomUUID(), Clase.Tipo.CLASE, Dia.LUNES,"08:00","10:00",a));
-        Seccion s = seccionRepository.save(new Seccion(null, UUID.randomUUID(),"MQ",null,false,h,m,null,null, List.of(c1,c2)));
-        inscripcionRepository.save(new Inscripcion(null, UUID.randomUUID(), List.of(s), null));
     }
 
     private void loadMateriasDefault(){
