@@ -1,6 +1,6 @@
 FROM maven:latest AS appserver
 COPY pom.xml /tmp/pom.xml
-RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
+RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml de.qaware.maven:go-offline-maven-plugin:resolve-dependencies
 RUN mkdir source
 WORKDIR /source
 ADD . .
@@ -11,4 +11,4 @@ RUN mkdir app
 WORKDIR /app
 COPY --from=appserver /source/target/app.jar .
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
-# CMD ["--spring.profiles.active=use-auth"]
+CMD ["--spring.profiles.active=use-auth"]
