@@ -3,7 +3,7 @@ COPY pom.xml /tmp/pom.xml
 RUN mvn -B -f /tmp/pom.xml -s /usr/share/maven/ref/settings-docker.xml dependency:resolve
 RUN mkdir source
 WORKDIR /source
-ADD ./source .
+ADD . .
 RUN mvn -B -s /usr/share/maven/ref/settings-docker.xml package -DskipTests
 
 FROM adoptopenjdk/openjdk11:alpine-jre AS production
