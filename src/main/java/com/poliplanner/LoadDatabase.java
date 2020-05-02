@@ -2,13 +2,12 @@ package com.poliplanner;
 
 import com.poliplanner.data.*;
 import com.poliplanner.domain.enums.AuthProvider;
-import com.poliplanner.domain.enums.Dia;
 import com.poliplanner.domain.model.*;
+import com.poliplanner.excel.ExcelReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -26,12 +25,16 @@ public class LoadDatabase {
     @Autowired
     private PrivilegeRepository privilegeRepository;
 
+    @Autowired
+    ExcelReader excelReader;
     @Bean
     public CommandLineRunner dataLoader() {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
                 loadMateriasDefault();
+                /*File file = new ClassPathResource("horario.xls").getFile();
+                excelReader.loadExcel(file);*/
 
             }
         };

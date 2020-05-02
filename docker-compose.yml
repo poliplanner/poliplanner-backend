@@ -1,0 +1,44 @@
+version: "3.5"
+services:
+  nginx:
+    image: nginx:1.17.10
+    container_name: nginx
+    ports:
+      - target: 8000
+        published: 80
+    depends_on:
+      - web
+    networks:
+      - app-net
+    volumes:
+    - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+
+  web:
+    build: .
+    container_name: web
+    command: java -jar /app/app.jar
+    depends_on:
+      - keycloak
+    environment:
+      - AUTHSERVER_URL=http://keycloak:8080
+    networks:
+      - app-net
+
+  keycloak:
+    image: jboss/keycloak:9.0.3
+    container_name: keycloak
+    ports:
+      - target: 8080
+        published: 8180
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - "KEYCLOAK_IMPORT=/tmp/realm.json -Dkeycloak.profile.feature.upload_scripts=enabled"
+    networks:
+      - app-net
+    volumes:
+      - ./keycloak/realm.json:/tmp/realm.json
+
+
+networks:
+  app-net:

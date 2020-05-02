@@ -1,12 +1,14 @@
 auth-server:
-  url: http://localhost:8083
+  url: ""
   realm-name: poliplanner
-spring:
-  profiles:
-    active:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${auth-server.url}/auth/realms/${auth-server.realm-name}
-          jwk-set-uri: ${auth-server.url}/auth/realms/${auth-server.realm-name}/protocol/openid-connect/certs
+  client: policlient
+  client-secret: 3756ad60-2a5c-4309-a880-a2d9ac660e4a
+
+keycloak:
+  realm: ${auth-server.realm-name}
+  auth-server-url: ${auth-server.url}/auth/
+  resource: ${auth-server.client}
+  principal-attribute: preferred_username
+  credentials:
+    secret: ${auth-server.client-secret}
+  confidential-port: 0
