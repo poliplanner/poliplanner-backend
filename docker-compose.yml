@@ -23,6 +23,8 @@ services:
       - AUTHSERVER_URL=http://keycloak:8080
     networks:
       - app-net
+    volumes:
+      - ./horarios:/app/horarios/
 
   keycloak:
     image: jboss/keycloak:9.0.3

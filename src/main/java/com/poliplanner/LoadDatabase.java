@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.FileSystemResource;
 
+import java.io.File;
 import java.util.*;
 
 @Configuration
@@ -33,8 +35,9 @@ public class LoadDatabase {
             @Override
             public void run(String... args) throws Exception {
                 loadMateriasDefault();
-                /*File file = new ClassPathResource("horario.xls").getFile();
-                excelReader.loadExcel(file);*/
+
+                File file = new FileSystemResource("/app/horarios/prueba.xls").getFile();
+                excelReader.loadExcel(file);
 
             }
         };
