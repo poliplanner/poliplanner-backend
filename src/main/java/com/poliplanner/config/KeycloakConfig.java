@@ -33,7 +33,7 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
                         //.antMatchers("/fpuna/materias")
                         //    .hasRole("admin")
                         .anyRequest()
-                            .authenticated();
+                            .permitAll();
     }
 
     /**

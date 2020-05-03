@@ -1,14 +1,42 @@
-auth-server:
-  url: ""
-  realm-name: poliplanner
-  client: policlient
-  client-secret: 3756ad60-2a5c-4309-a880-a2d9ac660e4a
+params:
+  keycloak:
+    url: ""
+    realm-name: poliplanner
+    client: policlient
+    client-secret: 3756ad60-2a5c-4309-a880-a2d9ac660e4a
+  db:
+    url: ""
+    name: ""
+    username: ""
+    password: ""
 
 keycloak:
-  realm: ${auth-server.realm-name}
-  auth-server-url: ${auth-server.url}/auth/
-  resource: ${auth-server.client}
+  realm: ${params.keycloak.realm-name}
+  auth-server-url: ${params.keycloak.url}/auth/
+  resource: ${params.keycloak.client}
   principal-attribute: preferred_username
   credentials:
-    secret: ${auth-server.client-secret}
+    secret: ${params.keycloak.client-secret}
   confidential-port: 0
+
+
+
+spring:
+  datasource:
+    url: "jdbc:postgresql://${params.db.url}/${params.db.name}"
+    username: ${params.db.username}
+    password: ${params.db.password}
+    driver-class-name: org.postgresql.Driver
+    platform: postgres
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+    show-sql: true
+    generate-ddl: true
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+

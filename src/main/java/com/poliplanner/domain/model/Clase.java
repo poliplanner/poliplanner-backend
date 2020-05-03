@@ -28,6 +28,7 @@ public class Clase {
     private Tipo tipo;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Dia dia;
 
     @NotNull
