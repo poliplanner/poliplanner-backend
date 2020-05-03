@@ -1,7 +1,9 @@
 package com.poliplanner.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,14 +25,13 @@ public class Inscripcion {
     @Column(length = 16, unique = true)
     private UUID uuid = UUID.randomUUID();
 
-    //usuario
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private Usuario usuario;
 
-    @ManyToMany
-    @JoinColumn(name = "uuid")
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Seccion> secciones;
 
     private Date createdAt;
-
 
     @PrePersist
     void createdAt() {

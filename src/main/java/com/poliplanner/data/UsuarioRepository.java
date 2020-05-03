@@ -5,7 +5,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
 
-public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
-    Optional<Usuario> findByEmail(String email);
-    boolean existsByEmail(String email);
+public interface UsuarioRepository extends CrudRepository<Usuario, String> {
+    default Usuario saveOrUpdate(Usuario usuario){
+        Usuario u = findById(usuario.getClientId()).orElse(save(usuario));
+        return u;
+    }
 }

@@ -29,6 +29,8 @@ class KeycloakConfig extends KeycloakWebSecurityConfigurerAdapter {
 
         http.cors()
                 .and()
+                    .csrf()
+                        .disable()
                     .authorizeRequests()
                         //.antMatchers("/fpuna/materias")
                         //    .hasRole("admin")

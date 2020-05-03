@@ -18,11 +18,7 @@ public class MateriaController {
     }
 
     @GetMapping
-    public Iterable<Materia> listMaterias(KeycloakAuthenticationToken principal, @RequestParam("carrera") List<String> carreras){
-        /*KeycloakPrincipal keycloakPrincipal = (KeycloakPrincipal) principal.getPrincipal();
-        RefreshableKeycloakSecurityContext context = (RefreshableKeycloakSecurityContext) keycloakPrincipal.getKeycloakSecurityContext();
-        System.out.println(context.getToken().getName());*/
-
+    public Iterable<Materia> listMaterias(@RequestParam("carrera") List<String> carreras){
         return repo.findByCarreraCodigoIn(carreras);
     }
 }

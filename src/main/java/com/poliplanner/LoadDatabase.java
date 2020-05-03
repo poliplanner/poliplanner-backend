@@ -22,10 +22,6 @@ public class LoadDatabase {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PrivilegeRepository privilegeRepository;
 
     @Autowired
     ExcelReader excelReader;
@@ -1106,48 +1102,4 @@ public class LoadDatabase {
 
     }
 
-    private void setupPrivileges(){
-        Privilege readPrivilege = createPrivilegeIfNotFound("READ_PRIVILEGE");
-        Privilege writePrivilege = createPrivilegeIfNotFound("WRITE_PRIVILEGE");
-
-        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
-        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Arrays.asList(readPrivilege));
-
-        Role adminRole = roleRepository.findByName("ROLE_ADMIN").get();
-        Usuario user = new Usuario();
-        user.setNombre("Test");
-        //user.setPassword(passwordEncoder.encode("test"));
-        user.setEmail("test@test.com");
-        user.setAuthProvider(AuthProvider.local);
-        user.setRoles(Arrays.asList(adminRole));
-        usuarioRepository.save(user);
-    }
-
-    private Privilege createPrivilegeIfNotFound(String name) {
-
-        Optional<Privilege> p = privilegeRepository.findByName(name);
-        Privilege privilege = null;
-        if(p.isPresent()){
-            privilege = p.get();
-        }else{
-            privilege = new Privilege(null, name);
-            privilegeRepository.save(privilege);
-        }
-        return privilege;
-    }
-
-    private Role createRoleIfNotFound(String name, Collection<Privilege> privileges) {
-
-        Optional<Role> r = roleRepository.findByName(name);
-        Role role = null;
-
-        if (r.isPresent()) {
-            role = r.get();
-        }else{
-            role = new Role(null,name,privileges);
-            roleRepository.save(role);
-        }
-        return role;
-    }
 }
