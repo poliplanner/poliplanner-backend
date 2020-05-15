@@ -3,34 +3,23 @@ services:
   nginx:
     image: nginx:1.17.10
     container_name: nginx
-    ports:
-      - target: 8000
-        published: 80
     depends_on:
       - web
     networks:
       - app-net
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
     restart: always
 
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile-debug
     container_name: web
     command: java -jar /app/app.jar
     depends_on:
       - keycloak
       - db
-    environment:
-      - PARAMS_KEYCLOAK_URL=http://keycloak:8080
-      - PARAMS_DB_URL=db:5432
-      - PARAMS_DB_NAME=web
-      - PARAMS_DB_USERNAME=admin
-      - PARAMS_DB_PASSWORD=admin
     networks:
       - app-net
-    volumes:
-      - ./horarios:/app/horarios/
     restart: always
 
   keycloak:
@@ -38,36 +27,13 @@ services:
     container_name: keycloak
     depends_on:
       - db
-    ports:
-      - target: 8080
-        published: 8180
-    environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin
-      - "KEYCLOAK_IMPORT=/tmp/realm.json -Dkeycloak.profile.feature.upload_scripts=enabled"
-      - DB_ADDR=db
-      - DB_VENDOR=postgres
-      - DB_DATABASE=keycloak
-      - DB_USER=admin
-      - DB_PASSWORD=admin
     networks:
       - app-net
-    volumes:
-      - ./keycloak/realm.json:/tmp/realm.json
     restart: always
 
   db:
     image: postgres:12.2
     container_name: db
-    environment:
-      - POSTGRES_MULTIPLE_DATABASES=web,keycloak
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-    ports:
-      - target: 5432
-        published: 5432
-    volumes:
-      - ./postgres/pg-init-scripts:/docker-entrypoint-initdb.d
     networks:
       - app-net
     restart: always
