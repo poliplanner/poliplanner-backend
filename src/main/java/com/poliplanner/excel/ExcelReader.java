@@ -1,23 +1,19 @@
 package com.poliplanner.excel;
 
-import com.poliplanner.data.*;
-import com.poliplanner.domain.enums.Dia;
-import com.poliplanner.domain.model.*;
+import com.poliplanner.data.CarreraRepository;
+import com.poliplanner.data.HorarioRepository;
+import com.poliplanner.data.SeccionRepository;
+import com.poliplanner.domain.model.Carrera;
+import com.poliplanner.domain.model.Horario;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
 
 @Component
 public class ExcelReader {

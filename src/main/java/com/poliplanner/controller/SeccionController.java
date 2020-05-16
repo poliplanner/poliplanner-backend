@@ -4,9 +4,7 @@ import com.poliplanner.data.SeccionRepository;
 import com.poliplanner.domain.model.Seccion;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @RestController

@@ -1,10 +1,6 @@
 package com.poliplanner.controller;
 
-import com.poliplanner.data.InscripcionRepository;
-import com.poliplanner.data.SeccionRepository;
-import com.poliplanner.data.UsuarioRepository;
 import com.poliplanner.domain.model.Inscripcion;
-import com.poliplanner.domain.model.Seccion;
 import com.poliplanner.domain.model.Usuario;
 import com.poliplanner.service.IInscripcionService;
 import com.poliplanner.service.ISeccionService;

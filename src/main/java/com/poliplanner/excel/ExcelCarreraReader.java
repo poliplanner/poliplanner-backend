@@ -3,18 +3,12 @@ package com.poliplanner.excel;
 import com.poliplanner.data.AulaRepository;
 import com.poliplanner.data.MateriaRepository;
 import com.poliplanner.data.SeccionRepository;
-import com.poliplanner.domain.enums.Dia;
 import com.poliplanner.domain.model.*;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.text.Normalizer;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 

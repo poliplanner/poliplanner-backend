@@ -10,10 +10,6 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 @Data
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 public class EstructuraHoja {

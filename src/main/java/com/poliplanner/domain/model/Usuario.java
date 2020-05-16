@@ -2,11 +2,11 @@ package com.poliplanner.domain.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.List;
-import java.util.UUID;
 
 @Data
 @Entity

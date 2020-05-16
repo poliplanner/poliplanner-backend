@@ -3,7 +3,10 @@ package com.poliplanner.data;
 import com.poliplanner.domain.model.Aula;
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public interface AulaRepository extends CrudRepository<Aula, Long> {

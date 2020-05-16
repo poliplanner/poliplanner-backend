@@ -1,10 +1,10 @@
 package com.poliplanner;
 
-import com.poliplanner.data.*;
-import com.poliplanner.domain.enums.AuthProvider;
-import com.poliplanner.domain.model.*;
+import com.poliplanner.data.CarreraRepository;
+import com.poliplanner.data.MateriaRepository;
+import com.poliplanner.domain.model.Carrera;
+import com.poliplanner.domain.model.Materia;
 import com.poliplanner.excel.ExcelReader;
-import com.poliplanner.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.FileSystemResource;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
 @Configuration
 public class LoadDatabase {

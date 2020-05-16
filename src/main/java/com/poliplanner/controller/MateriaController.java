@@ -2,7 +2,6 @@ package com.poliplanner.controller;
 
 import com.poliplanner.data.MateriaRepository;
 import com.poliplanner.domain.model.Materia;
-import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

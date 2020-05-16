@@ -1,7 +1,9 @@
 package com.poliplanner.excel;
 
 import com.poliplanner.domain.enums.Dia;
-import com.poliplanner.domain.model.*;
+import com.poliplanner.domain.model.Aula;
+import com.poliplanner.domain.model.Clase;
+import com.poliplanner.domain.model.Examen;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
