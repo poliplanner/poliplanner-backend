@@ -6,6 +6,9 @@ import com.poliplanner.data.UsuarioRepository;
 import com.poliplanner.domain.model.Inscripcion;
 import com.poliplanner.domain.model.Seccion;
 import com.poliplanner.domain.model.Usuario;
+import com.poliplanner.service.IInscripcionService;
+import com.poliplanner.service.ISeccionService;
+import com.poliplanner.service.IUsuarioService;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
@@ -21,26 +24,21 @@ import java.util.UUID;
 @RequestMapping(path = "/users/inscripciones", produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin("*")
 public class InscripcionController {
-    private InscripcionRepository inscripcionRepository;
-    private SeccionRepository seccionRepository;
-    private UsuarioRepository usuarioRepository;
+    private IInscripcionService inscripcionService;
+    private ISeccionService seccionService;
 
-    public InscripcionController(InscripcionRepository inscripcionRepository, SeccionRepository seccionRepository, UsuarioRepository usuarioRepository) {
-        this.inscripcionRepository = inscripcionRepository;
-        this.seccionRepository = seccionRepository;
-        this.usuarioRepository = usuarioRepository;
-    }
+    private IUsuarioService usuarioService;
 
     @GetMapping
     public List<Inscripcion> listInscripciones(KeycloakAuthenticationToken principal){
         AccessToken token = getPrincipalToken(principal);
-        return inscripcionRepository.findByUsuario_ClientIdOrderByCreatedAtDesc(token.getSubject());
+        return inscripcionService.findInscripciones(token.getSubject());
     }
 
     @GetMapping(path = "/last")
     public Inscripcion lastInscripcion(KeycloakAuthenticationToken principal){
         AccessToken token = getPrincipalToken(principal);
-        return inscripcionRepository.findFirstByUsuario_ClientIdOrderByCreatedAtDesc(token.getSubject());
+        return inscripcionService.findLastInscripcion(token.getSubject());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -54,13 +52,13 @@ public class InscripcionController {
         usuario.setImageUrl(token.getPicture());
         usuario.setNombre(token.getName());
         usuario.setUsername(token.getPreferredUsername());
-        usuario = usuarioRepository.saveOrUpdate(usuario);
+        usuario = usuarioService.saveOrUpdate(usuario);
 
         Inscripcion inscripcion = new Inscripcion();
-        inscripcion.setSecciones(seccionRepository.findAllByUuidIn(secciones));
+        inscripcion.setSecciones(seccionService.findByUUID(secciones));
         inscripcion.setUsuario(usuario);
 
-        return inscripcionRepository.save(inscripcion);
+        return inscripcionService.save(inscripcion);
     }
 
     public AccessToken getPrincipalToken(KeycloakAuthenticationToken principal){

@@ -4,6 +4,7 @@ import com.poliplanner.data.*;
 import com.poliplanner.domain.enums.AuthProvider;
 import com.poliplanner.domain.model.*;
 import com.poliplanner.excel.ExcelReader;
+import com.poliplanner.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -19,9 +20,6 @@ public class LoadDatabase {
     private CarreraRepository carreraRepository;
     @Autowired
     private MateriaRepository materiaRepository;
-
-    @Autowired
-    private UsuarioRepository usuarioRepository;
 
     @Autowired
     ExcelReader excelReader;
