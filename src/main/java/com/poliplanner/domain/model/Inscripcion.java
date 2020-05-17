@@ -28,8 +28,8 @@ public class Inscripcion {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Usuario usuario;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Seccion> secciones;
+    @ElementCollection
+    private List<UUID> secciones;
 
     private Date createdAt;
 

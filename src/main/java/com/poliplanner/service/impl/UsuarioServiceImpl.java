@@ -1,8 +1,8 @@
 package com.poliplanner.service.impl;
 
-import com.poliplanner.data.UsuarioRepository;
 import com.poliplanner.domain.model.Usuario;
 import com.poliplanner.service.IUsuarioService;
+import com.poliplanner.service.data.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 @Service
