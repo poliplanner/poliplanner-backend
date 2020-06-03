@@ -7,14 +7,42 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
 
-  web:
+  backend-web:
     environment:
       - PARAMS_KEYCLOAK_URL=http://keycloak:8080
-      - PARAMS_DB_URL=db:5432
-      - PARAMS_DB_NAME=web
+      - PARAMS_DB_URL=backend-db:5432
+      - PARAMS_DB_NAME=backend-web
       - PARAMS_DB_USERNAME=admin
       - PARAMS_DB_PASSWORD=admin
-      - PARAMS_HORARIO_URL=http://web-horario:8080
+      - PARAMS_HORARIO_URL=http://horario-web:8080
+
+  backend-db:
+    environment:
+      - POSTGRES_DB=backend-web
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - target: 5432
+        published: 5432
+
+  horario-web:
+    environment:
+      - PARAMS_KEYCLOAK_URL=http://keycloak:8080
+      - PARAMS_DB_URL=horario-db:5432
+      - PARAMS_DB_NAME=horario-web
+      - PARAMS_DB_USERNAME=admin
+      - PARAMS_DB_PASSWORD=admin
+    volumes:
+      - ./horarios:/app/horarios/
+
+  horario-db:
+    environment:
+      - POSTGRES_DB=horario-web
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+    ports:
+      - target: 5432
+        published: 5433
 
   keycloak:
     ports:
@@ -24,7 +52,7 @@ services:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
       - "KEYCLOAK_IMPORT=/tmp/realm.json -Dkeycloak.profile.feature.upload_scripts=enabled"
-      - DB_ADDR=db
+      - DB_ADDR=keycloak-db
       - DB_VENDOR=postgres
       - DB_DATABASE=keycloak
       - DB_USER=admin
@@ -32,32 +60,11 @@ services:
     volumes:
       - ./keycloak/realm.json:/tmp/realm.json
 
-  db:
+  keycloak-db:
     environment:
-      - POSTGRES_MULTIPLE_DATABASES=web,keycloak
+      - POSTGRES_DB=keycloak
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
     ports:
       - target: 5432
-        published: 5432
-    volumes:
-      - ./postgres/pg-init-scripts:/docker-entrypoint-initdb.d
-
-  web-horario:
-    environment:
-      - PARAMS_KEYCLOAK_URL=http://keycloak:8080
-      - PARAMS_DB_URL=db-horario:5432
-      - PARAMS_DB_NAME=web-horario
-      - PARAMS_DB_USERNAME=admin
-      - PARAMS_DB_PASSWORD=admin
-    volumes:
-      - ./horarios:/app/horarios/
-
-  db-horario:
-    environment:
-      - POSTGRES_DB=web-horario
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-    ports:
-      - target: 5432
-        published: 5433
+        published: 5434
