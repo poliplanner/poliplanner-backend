@@ -32,8 +32,6 @@ services:
       - PARAMS_DB_NAME=horario-web
       - PARAMS_DB_USERNAME=admin
       - PARAMS_DB_PASSWORD=admin
-    volumes:
-      - ./horarios:/app/horarios/
 
   horario-db:
     environment:
