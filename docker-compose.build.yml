@@ -1,0 +1,11 @@
+version: "3.5"
+services:
+  backend-web:
+    build:
+      context: .
+    image: marcecardozo/poliplanner-backend-web:dev
+
+  horario-web:
+    build:
+      context: ../poliplanner-horario/
+    image: marcecardozo/poliplanner-horario-web:dev
