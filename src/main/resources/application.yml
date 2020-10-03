@@ -9,9 +9,6 @@ params:
     name: ""
     username: ""
     password: ""
-  horario:
-    url: ""
-    secciones-url: ${params.horario.url}/fpuna/secciones/
 
 keycloak:
   realm: ${params.keycloak.realm-name}
@@ -33,7 +30,7 @@ spring:
     platform: postgres
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
     show-sql: true
     generate-ddl: true

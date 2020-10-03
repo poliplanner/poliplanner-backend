@@ -1,4 +1,4 @@
-package com.poliplanner.service.data;
+package com.poliplanner.data;
 
 import com.poliplanner.domain.model.Usuario;
 import org.springframework.data.repository.CrudRepository;

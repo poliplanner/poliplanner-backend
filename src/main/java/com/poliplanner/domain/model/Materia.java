@@ -7,15 +7,13 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Inscripcion {
+public class Materia {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,18 +22,15 @@ public class Inscripcion {
     @NotNull
     @Column(length = 16, unique = true)
     private UUID uuid = UUID.randomUUID();
+    @NotNull
+    @ManyToOne
+    private Carrera carrera;
+    @NotNull
+    private String nombre;
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private Usuario usuario;
+    private Integer creditos;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Seccion> secciones;
+    private Float porcentajeCreditosRequeridos;
 
-    private Date createdAt;
-
-    @PrePersist
-    void createdAt() {
-        this.createdAt = new Date();
-    }
-
+    private Integer semestre;
 }

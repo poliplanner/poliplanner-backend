@@ -14,7 +14,8 @@ services:
       - PARAMS_DB_NAME=web
       - PARAMS_DB_USERNAME=admin
       - PARAMS_DB_PASSWORD=admin
-      - PARAMS_HORARIO_URL=http://web-horario:8080
+    volumes:
+      - ./horarios:/app/horarios/
 
   keycloak:
     ports:
@@ -42,22 +43,3 @@ services:
         published: 5432
     volumes:
       - ./postgres/pg-init-scripts:/docker-entrypoint-initdb.d
-
-  web-horario:
-    environment:
-      - PARAMS_KEYCLOAK_URL=http://keycloak:8080
-      - PARAMS_DB_URL=db-horario:5432
-      - PARAMS_DB_NAME=web-horario
-      - PARAMS_DB_USERNAME=admin
-      - PARAMS_DB_PASSWORD=admin
-    volumes:
-      - ./horarios:/app/horarios/
-
-  db-horario:
-    environment:
-      - POSTGRES_DB=web-horario
-      - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=admin
-    ports:
-      - target: 5432
-        published: 5433

@@ -1,9 +1,7 @@
 package com.poliplanner.controller;
 
-import com.poliplanner.domain.dto.InscripcionDto;
 import com.poliplanner.domain.model.Inscripcion;
 import com.poliplanner.domain.model.Usuario;
-import com.poliplanner.domain.pojo.Seccion;
 import com.poliplanner.service.IInscripcionService;
 import com.poliplanner.service.ISeccionService;
 import com.poliplanner.service.IUsuarioService;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/users/inscripciones", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,12 +25,6 @@ public class InscripcionController {
 
     private IUsuarioService usuarioService;
 
-    public InscripcionController(IInscripcionService inscripcionService, ISeccionService seccionService, IUsuarioService usuarioService) {
-        this.inscripcionService = inscripcionService;
-        this.seccionService = seccionService;
-        this.usuarioService = usuarioService;
-    }
-
     @GetMapping
     public List<Inscripcion> listInscripciones(KeycloakAuthenticationToken principal){
         AccessToken token = getPrincipalToken(principal);
@@ -41,16 +32,14 @@ public class InscripcionController {
     }
 
     @GetMapping(path = "/last")
-    public InscripcionDto lastInscripcion(KeycloakAuthenticationToken principal){
+    public Inscripcion lastInscripcion(KeycloakAuthenticationToken principal){
         AccessToken token = getPrincipalToken(principal);
-
-        Inscripcion inscripcion = inscripcionService.findLastInscripcion(token.getSubject());
-        return new InscripcionDto(inscripcion, seccionService.findByUUID(inscripcion.getSecciones()));
+        return inscripcionService.findLastInscripcion(token.getSubject());
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public InscripcionDto saveInscripcionUser(KeycloakAuthenticationToken principal, @RequestBody List<UUID> secciones){
+    public Inscripcion saveInscripcionUser(KeycloakAuthenticationToken principal, @RequestBody List<UUID> secciones){
         AccessToken token = getPrincipalToken(principal);
 
         Usuario usuario = new Usuario();
@@ -62,15 +51,10 @@ public class InscripcionController {
         usuario = usuarioService.saveOrUpdate(usuario);
 
         Inscripcion inscripcion = new Inscripcion();
-
-        List<Seccion> seccionList = seccionService.findByUUID(secciones);
-        List<UUID> uuidList = seccionList.stream().map(seccion -> seccion.getUuid()).collect(Collectors.toList());
-
-        inscripcion.setSecciones(uuidList);
+        inscripcion.setSecciones(seccionService.findByUUID(secciones));
         inscripcion.setUsuario(usuario);
-        inscripcion = inscripcionService.save(inscripcion);
 
-        return new InscripcionDto(inscripcion, seccionList);
+        return inscripcionService.save(inscripcion);
     }
 
     public AccessToken getPrincipalToken(KeycloakAuthenticationToken principal){

@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Inscripcion {
+public class Horario {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,17 +24,10 @@ public class Inscripcion {
     @Column(length = 16, unique = true)
     private UUID uuid = UUID.randomUUID();
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private Usuario usuario;
+    private Date fechaPublicacion;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Seccion> secciones;
+    @NotNull
+    private String nombre;
 
-    private Date createdAt;
-
-    @PrePersist
-    void createdAt() {
-        this.createdAt = new Date();
-    }
-
+    private String descripcion;
 }
