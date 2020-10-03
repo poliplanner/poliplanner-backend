@@ -1,8 +1,10 @@
 package com.poliplanner;
 
 import com.poliplanner.data.CarreraRepository;
+import com.poliplanner.data.HorarioRepository;
 import com.poliplanner.data.MateriaRepository;
 import com.poliplanner.domain.model.Carrera;
+import com.poliplanner.domain.model.Horario;
 import com.poliplanner.domain.model.Materia;
 import com.poliplanner.excel.ExcelReader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class LoadDatabase {
     private CarreraRepository carreraRepository;
     @Autowired
     private MateriaRepository materiaRepository;
+    @Autowired
+    private HorarioRepository horarioRepository;
 
     @Autowired
     ExcelReader excelReader;
@@ -29,10 +33,13 @@ public class LoadDatabase {
         return new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                loadMateriasDefault();
+                Iterable<Horario> horarios = horarioRepository.findAll();
+                if(!horarios.iterator().hasNext()) {
+                    loadMateriasDefault();
 
-                File file = new FileSystemResource("/app/horarios/prueba.xls").getFile();
-                excelReader.loadExcel(file);
+                    File file = new FileSystemResource("/app/horarios/prueba.xls").getFile();
+                    excelReader.loadExcel(file);
+                }
 
             }
         };

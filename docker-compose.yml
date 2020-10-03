@@ -7,7 +7,7 @@ services:
       - web
     networks:
       - app-net
-    restart: always
+    restart: on-failure
 
   web:
     build:
@@ -20,7 +20,7 @@ services:
       - db
     networks:
       - app-net
-    restart: always
+    restart: on-failure
 
   keycloak:
     image: jboss/keycloak:9.0.3
@@ -29,14 +29,14 @@ services:
       - db
     networks:
       - app-net
-    restart: always
+    restart: on-failure
 
   db:
     image: postgres:12.2
     container_name: db
     networks:
       - app-net
-    restart: always
+    restart: on-failure
 
 networks:
   app-net:

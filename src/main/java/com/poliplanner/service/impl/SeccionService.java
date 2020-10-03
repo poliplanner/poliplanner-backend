@@ -3,11 +3,13 @@ package com.poliplanner.service.impl;
 import com.poliplanner.data.SeccionRepository;
 import com.poliplanner.domain.model.Seccion;
 import com.poliplanner.service.ISeccionService;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class SeccionService implements ISeccionService {
     private SeccionRepository seccionRepository;
 

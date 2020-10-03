@@ -3,11 +3,14 @@ services:
   nginx:
     ports:
       - target: 8000
-        published: 80
+        published: 8888
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
 
   web:
+    ports:
+      - target: 8080
+        published: 8887
     environment:
       - PARAMS_KEYCLOAK_URL=http://keycloak:8080
       - PARAMS_DB_URL=db:5432
@@ -16,11 +19,12 @@ services:
       - PARAMS_DB_PASSWORD=admin
     volumes:
       - ./horarios:/app/horarios/
+      - ./.m2:/root/.m2
 
   keycloak:
     ports:
       - target: 8080
-        published: 8180
+        published: 8889
     environment:
       - KEYCLOAK_USER=admin
       - KEYCLOAK_PASSWORD=admin
@@ -40,6 +44,6 @@ services:
       - POSTGRES_PASSWORD=admin
     ports:
       - target: 5432
-        published: 5432
+        published: 8890
     volumes:
       - ./postgres/pg-init-scripts:/docker-entrypoint-initdb.d

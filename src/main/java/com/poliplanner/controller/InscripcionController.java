@@ -2,6 +2,7 @@ package com.poliplanner.controller;
 
 import com.poliplanner.domain.model.Inscripcion;
 import com.poliplanner.domain.model.Usuario;
+import com.poliplanner.domain.model.Seccion;
 import com.poliplanner.service.IInscripcionService;
 import com.poliplanner.service.ISeccionService;
 import com.poliplanner.service.IUsuarioService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/users/inscripciones", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -24,6 +26,12 @@ public class InscripcionController {
     private ISeccionService seccionService;
 
     private IUsuarioService usuarioService;
+
+    public InscripcionController(IInscripcionService inscripcionService, ISeccionService seccionService, IUsuarioService usuarioService) {
+        this.inscripcionService = inscripcionService;
+        this.seccionService = seccionService;
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping
     public List<Inscripcion> listInscripciones(KeycloakAuthenticationToken principal){
@@ -51,10 +59,13 @@ public class InscripcionController {
         usuario = usuarioService.saveOrUpdate(usuario);
 
         Inscripcion inscripcion = new Inscripcion();
-        inscripcion.setSecciones(seccionService.findByUUID(secciones));
-        inscripcion.setUsuario(usuario);
 
-        return inscripcionService.save(inscripcion);
+        List<Seccion> seccionList = seccionService.findByUUID(secciones);
+        inscripcion.setSecciones(seccionList);
+        inscripcion.setUsuario(usuario);
+        inscripcion = inscripcionService.save(inscripcion);
+
+        return inscripcion;
     }
 
     public AccessToken getPrincipalToken(KeycloakAuthenticationToken principal){

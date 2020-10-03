@@ -5,6 +5,7 @@ import com.poliplanner.domain.model.Seccion;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -18,8 +19,21 @@ public class SeccionController {
     }
 
     @GetMapping
-    public Iterable<Seccion> listSecciones(@RequestParam("carrera") List<String> carreras,
-                                           @RequestParam("horario") String horarioUuid){
-        return repo.findByMateria_Carrera_CodigoInAndHorario_Uuid(carreras,UUID.fromString(horarioUuid));
+    public Iterable<Seccion> listSecciones(@RequestParam("carrera") Optional<List<String>> carrerasOptional,
+                                           @RequestParam("horario") Optional<String> horarioUuidOptional,
+
+                                           @RequestParam("uuid") Optional<List<UUID>>  seccionUuidOptional){
+        if(seccionUuidOptional.isPresent()){
+            List<UUID> seccionUuid = seccionUuidOptional.get();
+            return repo.findAllByUuidIn(seccionUuid);
+        } else if(carrerasOptional.isPresent() && horarioUuidOptional.isPresent()) {
+            List<String> carreras = carrerasOptional.get();
+            String horarioUuid = horarioUuidOptional.get();
+
+            return repo.findByMateria_Carrera_CodigoInAndHorario_Uuid(carreras,UUID.fromString(horarioUuid));
+        }
+        return null;
     }
+
+
 }
