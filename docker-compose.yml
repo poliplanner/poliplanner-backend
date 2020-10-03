@@ -4,29 +4,22 @@ services:
     image: nginx:1.17.10
     container_name: nginx
     depends_on:
-      - backend-web
-      - horario-web
+      - web
+      - web-horario
     networks:
       - app-net
     restart: always
 
-  backend-web:
+  web:
     build:
       context: .
       dockerfile: Dockerfile-debug
-    container_name: backend-web
+    container_name: web
     command: java -jar /app/app.jar
     depends_on:
       - keycloak
-      - backend-db
-      - horario-web
-    networks:
-      - app-net
-    restart: always
-
-  backend-db:
-    image: postgres:12.2
-    container_name: backend-db
+      - db
+      - web-horario
     networks:
       - app-net
     restart: always
@@ -35,34 +28,34 @@ services:
     image: jboss/keycloak:9.0.3
     container_name: keycloak
     depends_on:
-      - keycloak-db
+      - db
     networks:
       - app-net
     restart: always
 
-  keycloak-db:
+  db:
     image: postgres:12.2
-    container_name: keycloak-db
+    container_name: db
     networks:
       - app-net
     restart: always
 
-  horario-web:
+  web-horario:
     build:
       context: ../poliplanner-horario/
       dockerfile: Dockerfile-debug
-    container_name: horario-web
+    container_name: web-horario
     command: java -jar /app/app.jar
     depends_on:
       - keycloak
-      - horario-db
+      - db-horario
     networks:
       - app-net
     restart: always
 
-  horario-db:
+  db-horario:
     image: postgres:12.2
-    container_name: horario-db
+    container_name: db-horario
     networks:
       - app-net
     restart: always
